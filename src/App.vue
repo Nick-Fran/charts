@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import BarChart from './components/chart/BarChart.vue'
 import Navbar from './components/Navbar.vue'
 import MainContainer from './components/MainContainer.vue'
 </script>
@@ -7,23 +7,6 @@ import MainContainer from './components/MainContainer.vue'
 <template>
   <Navbar title="Vite + Vue + Chart - Sample" />
   <MainContainer>
-    <HelloWorld msg="Vite + Vue" />
+    <BarChart />
   </MainContainer>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
