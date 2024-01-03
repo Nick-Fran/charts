@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import Navbar from './components/Navbar.vue'
+import MainContainer from './components/MainContainer.vue'
 </script>
 
 <template>
-  <Navbar title="Vite + Vue + Chart - Sample"/>
-  <div>
-    
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <Navbar title="Vite + Vue + Chart - Sample" />
+  <MainContainer>
+    <HelloWorld msg="Vite + Vue" />
+  </MainContainer>
 </template>
 
 <style scoped>
@@ -18,9 +18,11 @@ import Navbar from './components/Navbar.vue'
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }

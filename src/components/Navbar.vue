@@ -18,7 +18,7 @@ defineProps<{ title: string }>()
 <style scoped>
 .navbar {
   display: flex;
-  flex: 1;
+  max-height: 120px;
   align-items: center;
   padding: 12px 24px;
   background-color: #464e47;
