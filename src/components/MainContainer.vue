@@ -10,5 +10,8 @@
   margin: 0 auto;
   padding: 2rem;
   flex: 1;
+  width: 768px;
+  align-items: center;
+  display: flex;
 }
 </style>
