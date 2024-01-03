@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import BarChart from './components/chart/BarChart.vue'
 import Navbar from './components/Navbar.vue'
 import MainContainer from './components/MainContainer.vue'
+import BarChart from './components/chart/BarChart.vue'
 </script>
 
 <template>
