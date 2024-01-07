@@ -3,6 +3,8 @@
     <button @click="refreshData">Refresh</button>
     <button @click="addColumn">Add Column</button>
     <button @click="removeColumn">Remove Column</button>
+    <button @click="addDataset">Add Dataset</button>
+    <button @click="removeDataset">Remove Dataset</button>
   </div>
   <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
 </template>
@@ -21,7 +23,7 @@ export default defineComponent({
   components: { Bar },
   methods: {
     refreshData() {
-      this.datasets = [{ data: GenerateSeries(this.size) }];
+      this.datasets = this.datasets.map((dataset) => ({ ...dataset, data: GenerateSeries(this.size) }));
     },
     addColumn() {
       this.size++;
@@ -45,20 +47,35 @@ export default defineComponent({
           }
         });
       }
+    },
+    addDataset() {
+      let updatedDatasets = [...this.datasets];
+      updatedDatasets.push({
+        data: GenerateSeries(this.size),
+        order: this.datasets.length + 1
+      })
+      this.datasets = updatedDatasets;
+    },
+    removeDataset() {
+      if (this.datasets.length > 1) {
+        let updatedDatasets = [...this.datasets];
+        updatedDatasets.pop()
+        this.datasets = updatedDatasets;
+      }
     }
   },
   data() {
     return {
       size: INITIAL_SIZE,
       labels: GenerateLinearArray(INITIAL_SIZE),
-      datasets: [{ data: GenerateSeries(INITIAL_SIZE) }],
+      datasets: [{ data: GenerateSeries(INITIAL_SIZE), order: 1 }],
       chartOptions: {
         responsive: true
       }
     }
   },
   computed: {
-    chartData: function () {
+    chartData() {
       return ({
         labels: this.labels,
         datasets: this.datasets
