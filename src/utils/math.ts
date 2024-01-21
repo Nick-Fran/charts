@@ -9,3 +9,7 @@ export function GenerateSeries(length?: number) {
 export function GenerateLinearArray(length?: number) {
   return [...Array(length ?? 10).keys()]
 }
+
+export function GenerateRandomColor() {
+  return '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+}

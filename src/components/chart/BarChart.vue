@@ -1,26 +1,37 @@
 <template>
   <div>
-    <button @click="refreshData">Refresh</button>
-    <button @click="addColumn">Add Column</button>
-    <button @click="removeColumn">Remove Column</button>
-    <button @click="addDataset">Add Dataset</button>
-    <button @click="removeDataset">Remove Dataset</button>
+    <v-btn class="action-button" @click="refreshData">Refresh</v-btn>
+    <v-btn class="action-button" @click="addColumn">Add Column</v-btn>
+    <v-btn class="action-button" @click="removeColumn">Remove Column</v-btn>
+    <v-btn class="action-button" @click="addDataset">Add Dataset</v-btn>
+    <v-btn class="action-button" @click="removeDataset">Remove Dataset</v-btn>
+    <v-btn class="action-button" @click="openDialog">Edit Datasets</v-btn>
   </div>
-  <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+  <Bar id="my-chart" ref="my-chart" :options="chartOptions" :data="chartData" />
+  <EditDatasetsModal :isOpen="isDialogOpen" :onClose="closeDialog" v-model:datasets="datasets"
+    :onUpdate="updateDatasets" />
 </template>
+
+<style scoped>
+.action-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import { GenerateRandom, GenerateSeries, GenerateLinearArray } from '../../utils/math.ts'
+import EditDatasetsModal from '../modal/EditDatasetsModal.vue';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const INITIAL_SIZE = 10;
 
 export default defineComponent({
-  components: { Bar },
+  components: { Bar, EditDatasetsModal },
   methods: {
     refreshData() {
       this.datasets = this.datasets.map((dataset) => ({ ...dataset, data: GenerateSeries(this.size) }));
@@ -31,7 +42,7 @@ export default defineComponent({
       this.datasets = this.datasets.map((dataset, index) => {
         let newData = [...dataset.data];
         newData.push(GenerateRandom())
-        return { data: newData, order: index + 1 }
+        return { ...dataset, data: newData, order: index + 1 }
       });
     },
     removeColumn() {
@@ -52,7 +63,9 @@ export default defineComponent({
       let updatedDatasets = [...this.datasets];
       updatedDatasets.push({
         data: GenerateSeries(this.size),
-        order: this.datasets.length + 1
+        order: this.datasets.length + 1,
+        backgroundColor: "#FFB1C1",
+        label: undefined
       })
       this.datasets = updatedDatasets;
     },
@@ -62,16 +75,30 @@ export default defineComponent({
         updatedDatasets.pop()
         this.datasets = updatedDatasets;
       }
+    },
+    updateDatasets() {
+      this.isDialogOpen = false;
+    },
+    openDialog() {
+      this.isDialogOpen = true;
+    },
+    closeDialog() {
+      this.isDialogOpen = false;
     }
   },
   data() {
     return {
       size: INITIAL_SIZE,
       labels: GenerateLinearArray(INITIAL_SIZE),
-      datasets: [{ data: GenerateSeries(INITIAL_SIZE), order: 1 }],
+      datasets: [{
+        data: GenerateSeries(INITIAL_SIZE), order: 1,
+        backgroundColor: "#FFB1C1",
+        label: undefined
+      }],
       chartOptions: {
         responsive: true
-      }
+      },
+      isDialogOpen: false
     }
   },
   computed: {
