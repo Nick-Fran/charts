@@ -8,7 +8,7 @@
             <v-text-field v-model="dataset.label"></v-text-field>
             <span class="separator">Dataset color:</span>
             <v-text-field v-model="dataset.backgroundColor"></v-text-field>
-            <v-btn class="separator" icon="mdi-reload" variant="plain" @click="GetRandomColor(dataset)" />
+            <v-btn class="separator" icon="mdi-reload" variant="plain" @click="UpdateToNewColor(dataset)" />
           </div>
         </div>
       </v-card-text>
@@ -45,7 +45,7 @@ const props = defineProps<{
 
 let datasetsInfo = ref(props.datasets);
 
-function GetRandomColor(datasetToUpdate: IDataset) {
+function UpdateToNewColor(datasetToUpdate: IDataset) {
   datasetsInfo.value = datasetsInfo.value.map(dataset => {
     if (dataset.order === datasetToUpdate.order) {
       const newColor = GenerateRandomColor();

@@ -8,7 +8,8 @@
     <v-btn class="action-button" @click="openDialog">Edit Datasets</v-btn>
   </div>
   <Bar id="my-chart" ref="my-chart" :options="chartOptions" :data="chartData" />
-  <EditDatasetsModal :isOpen="isDialogOpen" :onClose="closeDialog" :datasets="datasets" :onUpdate="updateDatasets" />
+  <EditDatasetsModal v-if="isDialogOpen" :isOpen="isDialogOpen" :onClose="closeDialog" :datasets="datasets"
+    :onUpdate="updateDatasets" />
 </template>
 
 <style scoped>
