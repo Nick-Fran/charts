@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="props.isOpen" width="600px">
+  <v-dialog v-model="props.isOpen" width="700px">
     <v-card>
       <v-card-text>
         <div v-for="dataset in datasets">
@@ -13,7 +13,7 @@
       </v-card-text>
       <v-card-actions>
         <v-btn color="secondary" @click="props.onClose">Close Dialog</v-btn>
-        <v-btn color="primary" @click="props.onUpdate()">Update</v-btn>
+        <v-btn color="primary" @click="props.onUpdate(props.datasets)">Update</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -37,6 +37,6 @@ const props = defineProps<{
   datasets: IDataset[]
   isOpen: boolean,
   onClose: () => void,
-  onUpdate: () => void,
+  onUpdate: (datasets: IDataset[]) => void,
 }>();
 </script>

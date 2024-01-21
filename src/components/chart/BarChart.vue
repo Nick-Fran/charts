@@ -8,8 +8,7 @@
     <v-btn class="action-button" @click="openDialog">Edit Datasets</v-btn>
   </div>
   <Bar id="my-chart" ref="my-chart" :options="chartOptions" :data="chartData" />
-  <EditDatasetsModal :isOpen="isDialogOpen" :onClose="closeDialog" v-model:datasets="datasets"
-    :onUpdate="updateDatasets" />
+  <EditDatasetsModal :isOpen="isDialogOpen" :onClose="closeDialog" :datasets="datasets" :onUpdate="updateDatasets" />
 </template>
 
 <style scoped>
@@ -23,8 +22,9 @@
 import { defineComponent } from 'vue';
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import { GenerateRandom, GenerateSeries, GenerateLinearArray } from '../../utils/math.ts'
+import { GenerateRandom, GenerateSeries, GenerateLinearArray, createInitialArray } from '../../utils/math.ts'
 import EditDatasetsModal from '../modal/EditDatasetsModal.vue';
+import { IDataset } from '../../utils/interfaces';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
@@ -76,7 +76,8 @@ export default defineComponent({
         this.datasets = updatedDatasets;
       }
     },
-    updateDatasets() {
+    updateDatasets(datasets: IDataset[]) {
+      this.datasets = [...datasets]
       this.isDialogOpen = false;
     },
     openDialog() {
@@ -90,11 +91,7 @@ export default defineComponent({
     return {
       size: INITIAL_SIZE,
       labels: GenerateLinearArray(INITIAL_SIZE),
-      datasets: [{
-        data: GenerateSeries(INITIAL_SIZE), order: 1,
-        backgroundColor: "#FFB1C1",
-        label: undefined
-      }],
+      datasets: createInitialArray(INITIAL_SIZE),
       chartOptions: {
         responsive: true
       },
